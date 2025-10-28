@@ -55,7 +55,11 @@ export const loginFoodPartner = async (req, res) => {
     if (!partner) {
         return res.status(400).json({ message: "Food Partner or Password is invalid" });
     }
-
+    // checking password
+    const isPasswordValid = await bcrypt.compare(password, partner.password);
+    if (!isPasswordValid) {
+        return res.status(400).json({ message: "Food Partner or Password is invalid" });
+    }
     //Successful login do whatever you want to do here like generating token etc
     const foodPartnerToken = jwt.sign({
         id: partner._id,
