@@ -1,0 +1,12 @@
+// Dummy credentials User for convenience in testing
+const userDummyData = {
+  fullName: "Priyanshu Singh",
+  email: "priyanshu@gmail.com",
+  password: "3441",
+};
+
+const foodPartnerDummyData = {
+  fullName: "shalvi",
+  email: "shalvi123@gmail.com",
+  password: "123456",
+};
