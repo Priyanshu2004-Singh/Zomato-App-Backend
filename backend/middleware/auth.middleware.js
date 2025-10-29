@@ -4,7 +4,15 @@ import jwt from "jsonwebtoken";
 const authFoodPartnerMiddleware = async (req, res, next) => {
   //Basic Validation
 
-  const token = req.cookies.foodPartnerToken; // Getting token from cookies
+  // Accept token from cookie or Authorization header (Bearer) to ease testing from Postman
+  let token = req.cookies && req.cookies.foodPartnerToken;
+  if (!token && req.headers && req.headers.authorization) {
+    const parts = req.headers.authorization.split(" ");
+    if (parts.length === 2 && parts[0] === "Bearer") {
+      token = parts[1];
+    }
+  }
+
   if (!token) {
     return res.status(401).json({ message: "Unauthorized Access - No Token" });
   }
