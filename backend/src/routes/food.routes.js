@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createFood  } from "../controllers/addFood.controller.js";
 import { getAllFoodItems } from "../controllers/getAllFoodItems.controller.js";
 import authFoodPartnerMiddleware from "../../middleware/foodPartnerAuth.middleware.js";
+import userAuthValidation from "../../middleware/userAuth.middleware.js";
 const router = Router();
 import multer from "multer";
 import fs from "fs";
@@ -40,7 +41,7 @@ router.post('/addFoodItem', authFoodPartnerMiddleware, upload.single('video'), c
 
 
 //! Acess only for user to get all food items in the db that showed on his frontend
-router.get('/getAllFoodItems', getAllFoodItems);
+router.get('/getAllFoodItems', userAuthValidation, getAllFoodItems);
 
 
 export default router;

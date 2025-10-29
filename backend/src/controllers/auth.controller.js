@@ -23,14 +23,14 @@ export const registerUser = async (req, res) => {
     password,
   });
 
-  const token = jwt.sign(
+  const userToken = jwt.sign(
     {
       id: newUser._id,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
-  res.cookie("token", token);
+  res.cookie("userToken", userToken);
 
   await newUser.save();
 
@@ -65,7 +65,7 @@ export const loginUser = async (req, res) => {
   }
 
   //Successful login do whatever you want to do here like generating token etc
-  const token = jwt.sign(
+  const userToken = jwt.sign(
     {
       id: user._id,
     },
@@ -73,7 +73,7 @@ export const loginUser = async (req, res) => {
     { expiresIn: "1d" }
   );
     // creating cookie to send token
-    res.cookie("token", token);
+    res.cookie("userToken", userToken);
 
   res.status(200).json({
     message: "User logged in successfully",
