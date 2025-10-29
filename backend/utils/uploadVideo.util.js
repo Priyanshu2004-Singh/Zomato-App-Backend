@@ -115,7 +115,8 @@ const uploadVideo = async (filePath, folder = "videos") => {
     }
 
     if (!result) throw new Error("Cloudinary returned an empty response.");
-
+    //! Debugging:
+    else console.log(`Cloudinary upload successful: ${filePath}`);
     // Accept multiple possible URL fields from Cloudinary responses
     const url = result.secure_url || result.secureUrl || result.url || result.sec_url || null;
 

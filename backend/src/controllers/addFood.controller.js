@@ -74,7 +74,7 @@ export const createFood = async (req, res) => {
             description: description || "No description provided",
         };
 
-        const newFood = await FoodItem.create(foodItemData);
+        const newFood = await FoodItem.create(foodItemData); // new column 
 
         return res.status(201).json({ 
             message: "Food item added successfully", 

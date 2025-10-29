@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { createFood } from "../controllers/addFood.controller.js";
-import authFoodPartnerMiddleware from "../../middleware/auth.middleware.js";
+import { createFood  } from "../controllers/addFood.controller.js";
+import { getAllFoodItems } from "../controllers/getAllFoodItems.controller.js";
+import authFoodPartnerMiddleware from "../../middleware/foodPartnerAuth.middleware.js";
 const router = Router();
 import multer from "multer";
 import fs from "fs";
@@ -36,5 +37,10 @@ const upload = multer({
 
 // ! Adding Food Item Controller  :- It is protected route , only food partners can add food items
 router.post('/addFoodItem', authFoodPartnerMiddleware, upload.single('video'), createFood);
+
+
+//! Acess only for user to get all food items in the db that showed on his frontend
+router.get('/getAllFoodItems', getAllFoodItems);
+
 
 export default router;
