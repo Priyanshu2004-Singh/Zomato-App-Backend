@@ -1,6 +1,5 @@
-import FoodPartner from "../src/modal/foodPartner.modal.js";
 import jwt from "jsonwebtoken";
-import User from "../src/modal/user.modal.js";
+import User from "../src/modal/user.modal.js"; 
 
 const userAuthValidation = async (req, res, next) => {
   //Basic Validation
@@ -23,14 +22,16 @@ const userAuthValidation = async (req, res, next) => {
     // Verifying token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // Fetching User details from db using id from token
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized Access - User not found" });
+    }
 
-    // Sending data except password: 
-  const user = await User.findById(decoded.id);
-  const hiddenPasswordUser = user.toObject();
-
-  delete hiddenPasswordUser.password;
-  req.user = hiddenPasswordUser;
-  next(); // Proceed to next middleware or route handler
+    // Sending data except password
+    const hiddenPasswordUser = user.toObject();
+    delete hiddenPasswordUser.password;
+    req.user = hiddenPasswordUser;
+    next(); // Proceed to next middleware or route handler
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized Access - Invalid Token" });
   }
